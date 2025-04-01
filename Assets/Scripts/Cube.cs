@@ -1,16 +1,32 @@
-using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Renderer))]
 public class Cube : MonoBehaviour
 {
-    [SerializeField] private float _splitChance = 1.0f;
+    private Renderer _renderer;
+    private Vector3 _scale;
+    private float _childMakeChance = 1f;
 
-    public event Action<float, Vector3, Vector3, Cube> CubeClicked;
+    public Vector3 Scale => _scale;
+    public float ChildMakeChance => _childMakeChance;
 
-    private void OnMouseDown()
+
+    private void Awake()
     {
-        CubeClicked?.Invoke(_splitChance, transform.position, transform.localScale, this);
-        Destroy(gameObject);
+        _renderer = GetComponent<Renderer>();
+    }
+
+    public void Initialize(Vector3 scale, float chance)
+    {
+        _scale = scale;
+        transform.localScale = _scale;
+        _childMakeChance = chance;
+        RandomizeColor();
+        gameObject.SetActive(true);
+    }
+
+    private void RandomizeColor()
+    {
+        _renderer.material.color = Random.ColorHSV();
     }
 }
