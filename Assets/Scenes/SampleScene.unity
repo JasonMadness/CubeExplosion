@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -796,10 +795,11 @@ MonoBehaviour:
   _cubeLayer:
     serializedVersion: 2
     m_Bits: 8
-  _spawnPoints:
-  - {x: -4.69, y: 2, z: 5.4}
-  - {x: 2.36, y: 2, z: -5}
-  - {x: 7.03, y: 2, z: 2.38}
+  _startingSpawnPoints:
+  - {fileID: 898155961}
+  - {fileID: 486114095}
+  - {fileID: 1444943219}
+  _exploder: {fileID: 1410446136}
 --- !u!4 &1180816414
 Transform:
   m_ObjectHideFlags: 0
@@ -814,6 +814,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1344165169}
+  - {fileID: 1410446135}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1344165167
@@ -1003,6 +1004,59 @@ Transform:
   - {fileID: 106750780}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1410446133
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1410446135}
+  - component: {fileID: 1410446136}
+  m_Layer: 0
+  m_Name: Exploder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1410446135
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410446133}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1180816414}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1410446136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410446133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7134fc6442e666e4494a11d92c2ed02d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _explosionForce: 25
+  _explosionRadius: 5
+  _upwardModifier: 5
+  _minHorizontalDirection: -3
+  _maxHorizontalDirection: 3
+  _minVerticalDirection: 0.5
+  _maxVerticalDirection: 2
+  _minExplosionDistance: 1
+  _maxExplosionDistance: 2
 --- !u!1 &1444943218
 GameObject:
   m_ObjectHideFlags: 0

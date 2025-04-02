@@ -4,7 +4,8 @@ public class Game : MonoBehaviour
 {
     [SerializeField] private CubeFactory _cubeFactory;
     [SerializeField] private LayerMask _cubeLayer;
-    [SerializeField] private Vector3[] _spawnPoints;
+    [SerializeField] private Transform[] _startingSpawnPoints;
+    [SerializeField] private Exploder _exploder;
 
     private const int LeftMouseButton = 0;
 
@@ -12,10 +13,10 @@ public class Game : MonoBehaviour
 
     private void Start()
     {
-        foreach (Vector3 position in _spawnPoints)
+        foreach (Transform spawnPoint in _startingSpawnPoints)
         {
             Cube cube = _cubeFactory.GetFromPool();
-            cube.transform.position = position;
+            cube.transform.position = spawnPoint.position;
             cube.Initialize(_settings.StartingCubeScale, _settings.StartingCubeChildChance);
         }
     }
@@ -26,7 +27,7 @@ public class Game : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f, _cubeLayer))
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _cubeLayer))
             {
                 if (hit.collider.gameObject.TryGetComponent(out Cube cube))
                 {
@@ -43,19 +44,19 @@ public class Game : MonoBehaviour
             Vector3 newScale = cube.Scale / 2;
             float newChance = cube.ChildMakeChance / 2;
             int newCubesCount = Random.Range(_settings.MinCubes, _settings.MaxCubes);
+            
+            Vector3 explosionPosition = cube.transform.position;            
+            Cube[] newCubes = new Cube[newCubesCount];
 
             for (int i = 0; i < newCubesCount; i++)
             {
-                Cube newCube = _cubeFactory.GetFromPool();
-                newCube.Initialize(newScale, newChance);
+                newCubes[i] = _cubeFactory.GetFromPool();
+                newCubes[i].Initialize(newScale, newChance);
             }
             
-            _cubeFactory.ReturnToPool(cube);
+            _exploder.Explode(explosionPosition, newCubes);
         }
-    }
 
-    private void MakeExplosion(Vector3 position, float force)
-    {
-        
+        _cubeFactory.ReturnToPool(cube);
     }
 }
